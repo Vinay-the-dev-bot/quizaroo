@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let url = "https://opentdb.com/api.php";
+export const url = "https://opentdb.com/api.php";
 // https://opentdb.com/api.php?amount=10&category=21&difficulty=hard&type=multiple
 export const getQuestions = (questions, diff, category) => {
   return async (dispatch) => {

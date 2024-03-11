@@ -1,9 +1,9 @@
-import { applyMiddleware, createStore } from "redux";
-import thunk from "thunk";
+import { createStore } from "redux";
 
 const initialState = {
   name: "",
   questions: [],
+  score: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,9 +12,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, name: action.payload };
     case "Questions":
       return { ...state, questions: action.payload };
+    case "Correct":
+      return { ...state, score: state.score + action.payload };
     default:
       return state;
   }
 };
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer);
+
+export default store;

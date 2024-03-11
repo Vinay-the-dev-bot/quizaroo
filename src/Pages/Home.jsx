@@ -8,20 +8,38 @@ import {
   flexbox,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getQuestions, url, userName } from "../Strore/actions";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function Home() {
+  const state = useSelector((state) => state);
   const [name, setName] = useState("");
   const [noOfQuestions, setNoOfQuestions] = useState(10);
   const [difficulty, setDifficulty] = useState("");
   const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmit = async () => {
+    console.log("dnfsdnklsdn");
+    // dispatch(userName);
+    // dispatch(getQuestions);
+    const response = await axios.get(
+      `${url}?amount=${noOfQuestions}&difficulty=${difficulty}&category=${category}&type=multiple`
+    );
+    const qsts = response.data.results;
+    console.log(response.data.results);
+    dispatch({ type: "Name", payload: name });
+    dispatch({ type: "Questions", payload: qsts });
+    navigate("/quiz");
+  };
   return (
     <>
-      {JSON.stringify(name)}
-      {JSON.stringify(noOfQuestions)}
-      {JSON.stringify(difficulty)}
-      {JSON.stringify(category)}
+      {JSON.stringify(state)}
 
       <FormControl
+        onSubmit={handleSubmit}
         width={"40%"}
         flexDirection={"column"}
         display={"flex"}
@@ -93,7 +111,7 @@ function Home() {
           onChange={(e) => setNoOfQuestions(e.target.value)}
           value={noOfQuestions}
         />
-        <Button width={"100%"} height={"40px"}>
+        <Button width={"100%"} onClick={handleSubmit} height={"40px"}>
           Start Quiz
         </Button>
       </FormControl>
