@@ -1,6 +1,8 @@
 import axios from "axios";
-
-export const url = "https://opentdb.com/api.php";
+//quizaroo-server.onrender.com
+export const qstnsurl = "https://opentdb.com/api.php/";
+export const url = "https://quizaroo-server.onrender.com/";
+// export const url = "http://localhost:3500/";
 // https://opentdb.com/api.php?amount=10&category=21&difficulty=hard&type=multiple
 export const getQuestions = (questions, diff, category) => {
   return async (dispatch) => {

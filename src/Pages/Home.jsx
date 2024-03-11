@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestions, url, userName } from "../Strore/actions";
+import { getQuestions, qstnsurl, url, userName } from "../Strore/actions";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
@@ -25,8 +25,11 @@ function Home() {
     console.log("dnfsdnklsdn");
     // dispatch(userName);
     // dispatch(getQuestions);
+    console.log(
+      `${qstnsurl}quiz?amount=${noOfQuestions}&difficulty=${difficulty}&category=${category}&type=multiple`
+    );
     const response = await axios.get(
-      `${url}?amount=${noOfQuestions}&difficulty=${difficulty}&category=${category}&type=multiple`
+      `${qstnsurl}quiz?amount=${noOfQuestions}&difficulty=${difficulty}&category=${category}&type=multiple`
     );
     const qsts = response.data.results;
     console.log(response.data.results);
@@ -36,9 +39,10 @@ function Home() {
   };
   return (
     <>
-      {JSON.stringify(state)}
-
       <FormControl
+        padding={"50px"}
+        borderRadius={"20px"}
+        border={"1px solid black"}
         onSubmit={handleSubmit}
         width={"40%"}
         flexDirection={"column"}
@@ -111,7 +115,12 @@ function Home() {
           onChange={(e) => setNoOfQuestions(e.target.value)}
           value={noOfQuestions}
         />
-        <Button width={"100%"} onClick={handleSubmit} height={"40px"}>
+        <Button
+          width={"100%"}
+          borderRadius={"5px"}
+          onClick={handleSubmit}
+          height={"40px"}
+        >
           Start Quiz
         </Button>
       </FormControl>
