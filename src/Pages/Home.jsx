@@ -6,6 +6,7 @@ import {
   Input,
   Select,
   flexbox,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,10 +22,18 @@ function Home() {
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let toast = useToast();
   const handleSubmit = async () => {
-    console.log("dnfsdnklsdn");
-    // dispatch(userName);
-    // dispatch(getQuestions);
+    if (!name) {
+      toast({
+        description: "Please Enter Your Name",
+        status: "warning",
+        position: "bottom",
+        duration: 1000,
+      });
+      return;
+    }
+
     console.log(
       `${qstnsurl}quiz?amount=${noOfQuestions}&difficulty=${difficulty}&category=${category}&type=multiple`
     );
@@ -59,8 +68,9 @@ function Home() {
           onChange={(e) => setName(e.target.value)}
         />
 
-        <select
+        <Select
           value={difficulty}
+          border={"1px solid black"}
           onChange={(e) => setDifficulty(e.target.value)}
         >
           <option selected width={"100%"} height={"40px"}>
@@ -69,10 +79,12 @@ function Home() {
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
-        </select>
-        <select
+        </Select>
+        <Select
+          // "#00C464" : "#089BCC"}
           width={"100%"}
           height={"40px"}
+          border={"1px solid black"}
           placeholder="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -104,7 +116,7 @@ function Home() {
           <option value="30">Science: Gadgets</option>
           <option value="31">Entertainment: Japanese Anime & Manga</option>
           <option value="32">Entertainment: Cartoon & Animations</option>
-        </select>
+        </Select>
         <Input
           width={"100%"}
           height={"40px"}
@@ -116,6 +128,7 @@ function Home() {
           value={noOfQuestions}
         />
         <Button
+          colorScheme="green"
           width={"100%"}
           borderRadius={"5px"}
           onClick={handleSubmit}

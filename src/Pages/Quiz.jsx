@@ -29,6 +29,7 @@ function Quiz() {
       });
       dispatch({ type: "Correct", payload: 1 });
     } else {
+      setCorrect(false);
       toast({
         title: "Wrong Answer.",
         status: "warning",
@@ -69,6 +70,7 @@ function Quiz() {
     navigate("/result");
   };
   const changeQuestion = () => {
+    setSelectedAnswer(null);
     setCorrect(false);
     setQstnNumber((qstnNumber) => qstnNumber + 1);
   };
@@ -81,7 +83,8 @@ function Quiz() {
         display={"flex"}
         gap={"50px"}
         borderRadius={"20px"}
-        bg={correct ? "#00C464" : "#089BCC"}
+        // bg={correct ? "#00C464" : "#089BCC"}
+        bg={selectedAnswer == "" ? "#089BCC" : correct ? "#00C464" : "red"}
         flexDirection={"column"}
         padding={"50px"}
       >

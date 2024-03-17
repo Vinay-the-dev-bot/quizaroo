@@ -9,7 +9,10 @@ function LeaderBoard() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${url}leaderboard`);
-        console.log(response.data.leaderboard);
+        let results = response.data.leaderboard.sort((a, b) => {
+          return b.score - a.score;
+        });
+        console.log("Results : ", results);
         setLeaderboard(response.data.leaderboard);
       } catch (error) {
         console.error("Error fetching leaderboard:", error);
@@ -24,7 +27,6 @@ function LeaderBoard() {
       <p className="boardText"> Leaderboard</p>
       {leaderboard &&
         leaderboard.map((lead, index) => {
-          console.log(lead);
           return (
             <div className="leaderboard">
               <p>{index + 1}</p>
